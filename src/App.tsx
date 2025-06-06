@@ -1,44 +1,52 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import { Button } from './components'
 
 function App() {
-  const [count, setCount] = useState(0) // componente inteligente, tiene un estado
-  const [name, setName] = useState("Lucas")
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const countMore = () => {
-    setCount((count) => count + 1) // agarra el contador y le suma 1. Ejecuta el metodo para agarrar el contador primero, y luego ejecuta el metodo que le suma 1
+  const consoleLoader = (loadingValue: boolean) => {
+    setLoading(loadingValue)
+    console.info(loading)
+  }
+  const fetchData = async () => {
+    consoleLoader(true)
+    try {
+      const response = await fetch("https://api.example.com/data")
+      
+      if (!response.ok) {
+        throw new Error("Error al obtener datos")
+      }
+
+      const jsonData = await response.json()
+      setData(jsonData)
+    } catch (err) {
+      setError(err as string)
+    } finally {
+      consoleLoader(false)
+    }
   }
 
-  // En este caso con cada click, se sumaria 5
-  // const countMore = () => {
-  //   setCount((count) => count + 1)
-  //   setCount((count) => count + 1)
-  //   setCount((count) => count + 1)
-  //   setCount((count) => count + 1)
-  //   setCount((count) => count + 1)
-  // }
+  
+  useEffect(() => {
+    fetchData()
+    // return () => {
+    //   // manejar el estado de la memoria (se libera o controlan las problematicas de lo asincrono)
+    // }
+  }, [])
 
-  // En este caso con cada click, se sumaria internamente count pero no se ejecutaria el render, por lo que siempre mostraria 0
-  // const countMore = () => {
-  //   setCount(count + 1)
-  //   setCount(count + 1)
-  //   setCount(count + 1)
-  //   setCount(count + 1)
-  //   setCount(count + 1)
-  // }
+  if (loading) {
+    return <div>Cargando...</div>
+  }
 
-  const changeName = () => {
-    setName("Maximiliano")
+  if (error)  {
+    return <div>UPS! Hay un error: {error}</div>
   }
 
   return (
-    <>
-      <Button label={`Count is ${count}`} parentMethod={countMore} />
-      <p>{name}</p>
-      <Button label="Change Name" parentMethod={changeName} />
-    </>
-  )
+      <div>{JSON.stringify(data)}</div>
+    )
 }
 
 export default App
