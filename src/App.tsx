@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
@@ -6,39 +6,29 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const consoleLoader = useCallback((loadingValue: boolean) => {
-    setLoading(loadingValue)
-    console.info(loading)
-  }, [loading])
-
-  const fetchData = useCallback(
-    async () => {
-      consoleLoader(true)
+  const fetchData = async () => {
+      setLoading(true)
       try {
         const response = await fetch("https://api.example.com/data")
         
         if (!response.ok) {
           throw new Error("Error al obtener datos")
         }
-
         const jsonData = await response.json()
         setData(jsonData)
       } catch (err) {
         setError(err as string)
       } finally {
-        consoleLoader(false)
+        setLoading(false)
       }
-    },
-    [consoleLoader],
-  )
+    }
 
-  
   useEffect(() => {
     fetchData()
     // return () => {
     //   // manejar el estado de la memoria (se libera o controlan las problematicas de lo asincrono)
     // }
-  }, [fetchData])
+  }, [])
 
   if (loading) {
     return <div>Cargando...</div>
