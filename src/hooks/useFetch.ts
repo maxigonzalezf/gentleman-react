@@ -9,6 +9,7 @@ interface Params<T> {
     error: ErrorType;
 }
 
+// useFetch es una 'key' que hace referencia a un espacio de memoria que contiene una funcion
 export const useFetch = <T>(url: string): Params<T> => {
     const [data, setData] = useState<Data<T>>(null)
     const [loading, setLoading] = useState(true)
