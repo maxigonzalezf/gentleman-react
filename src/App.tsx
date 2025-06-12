@@ -1,5 +1,7 @@
 import './App.css'
 import { AppForm, Button, ColorRed } from './components'
+import { GlobalProvider } from './context/global.provider'
+
 
 function App() {
 
@@ -16,15 +18,16 @@ function App() {
   }
 
   return (
-    <>
+    // si no pongo el Provider, value = null (error)
+    <GlobalProvider>
       <ColorRed><Button parentMethod={dimeHola}>My red button</Button></ColorRed>
       <Button parentMethod={handleClick}>My normal button</Button>
     
       <AppForm>
         <button type="submit" onClick={submit} ></button>
       </AppForm>
-    </>
-    )
+    </GlobalProvider>
+  )
 }
 
 export default App
