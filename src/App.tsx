@@ -1,15 +1,21 @@
 import './App.css'
-import { BookReader, FocusInput, PhoneBook, ShoppingCart } from './components'
+import { Modal } from './components'
+import { useModalContext } from './components/Modal/context/ModalContext'
 
 function App() {
+  const {setState} = useModalContext()
+
+  const openModal = () => {
+    setState(true)
+  }
 
   return (
-  // siempre los componentes deben tener un padre en el render (en este caso uso un fragmento (<> </>) porque no lo tienen)
   <>
-    {/*<BookReader />*/}
-    {/*<FocusInput />*/}
-    {/*<ShoppingCart />*/}
-    <PhoneBook />
+    <Modal>
+      <h2>Hola MAxi</h2>
+      <h3>Como estas</h3>
+    </Modal>
+    <button onClick={openModal}>Abrir</button>
   </>
   )
 }
