@@ -1,21 +1,13 @@
 import './App.css'
-import { Modal } from './components'
-import { useModalContext } from './components/Modal/context'
+import { EffectExample, PromiseError, UndefinedExample } from './components/ErrorBoundaryExamples'
 
 function App() {
-  const {setState} = useModalContext()
-
-  const openModal = () => {
-    setState(true)
-  }
 
   return (
   <>
-    <Modal>
-      <h2>Hola MAxi</h2>
-      <h3>Como estas</h3>
-    </Modal>
-    <button onClick={openModal}>Abrir</button>
+    {/*<UndefinedExample />*/}
+    {/*<EffectExample />*/}
+    <PromiseError />
   </>
   )
 }
