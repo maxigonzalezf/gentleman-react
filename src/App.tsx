@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './App.css'
 import { EffectExample, PromiseError, UndefinedExample } from './components/ErrorBoundaryExamples'
 import { getCharacter } from './services/api.service'
@@ -17,7 +17,7 @@ function App() {
     fetchMorty()
   }, []) */
 
-  const { loading, error, data, fetch } = useApi<Character>(getCharacter(1), { autoFetch: true }) // cuando carga el componente, hace el fetch automaticamente (autoFetch: true)
+  const { loading, error, data, fetch } = useApi<Character, number>(getCharacter, { autoFetch: true, params: 1 })
 
   if (loading) {
     return (<p>Cargando</p>)
@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       {JSON.stringify(data)}
-      <button onClick={fetch}></button>
+      <button onClick={() => fetch(2)}></button>
     </>
   )
 }

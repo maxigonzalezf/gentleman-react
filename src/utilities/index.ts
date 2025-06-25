@@ -1,1 +1,1 @@
-export * from "./loadAbort.utilities"
+export * from "./loadAbort.utility"
