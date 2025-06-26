@@ -1,38 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 import './App.css'
-import { EffectExample, PromiseError, UndefinedExample } from './components/ErrorBoundaryExamples'
-import { getCharacter } from './services/api.service'
-import { type Character, emptyCharacter } from './models';
-import { useApi } from './hooks/useApi';
 
-function App() {
-/*   const [data, setData] = useState<Character>(emptyCharacter)
+interface Props {
+    children: ReactNode // nodo renderizable por React
+}
 
-  const fetchMorty = async () => {
-    const result = await getCharacter(1);
-    setData(result.data)
-  }
-
-  useEffect(() => {
-    fetchMorty()
-  }, []) */
-
-  const { loading, error, data, fetch } = useApi<Character, number>(getCharacter, { autoFetch: true, params: 1 })
-
-  if (loading) {
-    return (<p>Cargando</p>)
-  }
-
-  if (error) {
-  return (<p>Ups {error.message}</p>)
-  }
+function App({ children }: Props) {
 
   return (
     <>
-      {JSON.stringify(data)}
-      <button onClick={() => fetch(2)}></button>
+      <p>Navbar</p>
+      {children}
+      <p>Footer</p>
     </>
   )
 }
 
-export default App
+export default App;
